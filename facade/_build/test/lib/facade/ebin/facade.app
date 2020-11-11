@@ -1,0 +1,10 @@
+{application,facade,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"facade"},
+              {modules,['Elixir.Facade','Elixir.Facade.IFacade',
+                        'Elixir.Facade.IFacade.Facade.ScheduleServer',
+                        'Elixir.Facade.IFacade.Facade.SockectServer',
+                        'Elixir.Facade.ScheduleServer',
+                        'Elixir.Facade.SockectServer']},
+              {registered,[]},
+              {vsn,"0.1.0"}]}.
