@@ -1,12 +1,12 @@
 defmodule Facade do
 
   defmodule ScheduleServer do
-    @enforce_keys[:name]
+    @enforce_keys [:name]
     defstruct [:name, :process]
   end
 
   defmodule SockectServer do
-    @enforce_keys[:name]
+    @enforce_keys [:name]
     defstruct [:name, :process, qty: 5]
   end
 
@@ -17,7 +17,6 @@ defmodule Facade do
 
   defimpl IFacade, for: ScheduleServer  do
     @context "ScheduleServer"
-
     def start(server) do
       server
       |> init
@@ -32,71 +31,37 @@ defmodule Facade do
     end
 
     defp init(server) do
-      new_status = "Initializating server #{@context}"
-      IO.puts(new_status)
-      %Facade.ScheduleServer{name: @context, process: new_status}
+      set(server, @context<>"-#{server.name}", "Initializating server #{@context}")
     end
 
     defp reeady_server(current) do
-      Process.sleep(800)
-      status = "Server #{@context} is ready"
-      IO.puts(status)
-      current = set(current, @context, status)
-      IO.inspect(current)
-      current
+      Process.sleep(1000)
+      set(current, current.name, "Server #{current.name} is ready")
     end
 
     defp close(current) do
-      Process.sleep(200)
-
+      IO.puts(current.process)
       cond do
-        current.process == "Server ScheduleServer is ready" ->
-          status = "clousing server #{@context}"
-          IO.puts(status)
-          current = set(current, nil, status)
-          current
+        current.process == "Server #{current.name} is ready" ->
+          Process.sleep(1000)
+          set(current, current.name, "clousing server #{current.name}")
         true -> throw("The server state must be running")
-
       end
-
-      status = "clousing server #{@context}"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
     end
 
     defp destroy(current) do
-      Process.sleep(600)
-      status = "Destroying server #{@context}"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
+      Process.sleep(5000)
+      set(current, current.name, "Destroying server #{current.name}")
     end
 
     defp shutdown(current) do
-      status = "Shutdown server #{@context}"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
+      set(current, current.name, "Shutdown server #{current.name}")
     end
 
     defp set(server, new_name, new_status) do
-      if new_name != nil do
-        IO.puts("map " <> Map.get(server, :name))
-        IO.puts("new " <> new_name)
-        # IO.puts("map " <> Map.set(server, :name, new_name))
-        # server = % new_name
-        # Map.put(server, :name, new_name)
-        Map.put(server, :name, "new_name")
-        # server = %Facade.ScheduleServer{name: new_name}
-        IO.puts(server.name)
-      end
-
-      if new_status != nil do
-        IO.puts("new status " <> new_status)
-        Map.put(server, :process, new_status)
-        # server = %Facade.ScheduleServer{process: new_status}
-      end
+      server
+      |> Map.put(:name, new_name)
+      |> Map.put(:process, new_status)
     end
   end
 
@@ -116,56 +81,38 @@ defmodule Facade do
       |> shutdown
     end
 
-    defp init(current) do
-      status = "Initializating server #{@context}"
-      IO.puts(status)
-      current = set(current, @context, status)
-      current
+    defp init(server) do
+      Process.sleep(1000)
+      set(server, @context<>"-#{server.name}", "Initializating server #{@context}")
     end
 
     defp reeady_server(current) do
-      Process.sleep(800)
-      status = "Server #{@context} is ready"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
+      Process.sleep(300)
+      set(current, current.name, "Server #{current.name} is ready")
     end
 
     defp close(current) do
       cond do
-        current.process == "Server SockectServer is ready" ->
-          Process.sleep(200)
-          status = "clousing server #{@context}"
-          IO.puts(status)
-          current = set(current, nil, status)
-          current
+        current.process == "Server #{current.name} is ready" ->
+          Process.sleep(1000)
+          set(current, current.name, "clousing server #{current.name}")
          true -> throw("The server state must be running")
         end
     end
 
     defp destroy(current) do
-      Process.sleep(600)
-      status = "Destroying server #{@context}"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
+      Process.sleep(1000)
+      set(current, current.name, "Destroying server #{current.name}")
     end
 
     defp shutdown(current) do
-      status = "Shutdown server #{@context}"
-      IO.puts(status)
-      current = set(current, nil, status)
-      current
+      set(current, current.name, "Shutdown server #{current.name}")
     end
 
     defp set(server, name, status) do
-      if name != nil do
-        Map.put(server, :name, name)
-      end
-
-      if status != nil do
-        Map.put(server, :process, status)
-      end
+      server
+      |> Map.put(:name, name)
+      |> Map.put(:process, status)
     end
   end
 end

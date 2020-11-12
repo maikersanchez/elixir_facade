@@ -5,6 +5,6 @@
                         'Elixir.Facade.IFacade.Facade.ScheduleServer',
                         'Elixir.Facade.IFacade.Facade.SockectServer',
                         'Elixir.Facade.ScheduleServer',
-                        'Elixir.Facade.SockectServer']},
+                        'Elixir.Facade.SockectServer','Elixir.Facade1']},
               {registered,[]},
               {vsn,"0.1.0"}]}.

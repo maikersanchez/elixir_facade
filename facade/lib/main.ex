@@ -1,13 +1,12 @@
-# alias Facade.ScheduleServer
+ alias Facade.ScheduleServer
 # alias Facade.SockectServer
-# alias Facade.IFacade
+alias Facade.IFacade
 
-# shudule = %ScheduleServer{name: ""}
-
-# server = IFacade.start(shudule)
-# IO.inspect(server)
-# server = IFacade.stop(server)
-# IO.inspect(IFacade.stop(server))
+shuedule1 = %ScheduleServer{name: "main"}
+# IO.inspect(shudule)
+server = IFacade.start(shuedule1)
+IO.inspect(server)
+IO.inspect(IFacade.stop(server))
 
 # IO.puts("------------------------------")
 
@@ -17,4 +16,14 @@
 # socServer = IFacade.stop(socServer)
 # IO.inspect(IFacade.stop(socServer))
 
-IO.puts(raise( %ScheduleServer{}) != "")
+# IO.puts( %ScheduleServer{})
+
+
+
+# shudule = %ScheduleServer{name: "main"}
+# shudule = Map.replace(shudule, :name, "bar")
+# shudule = Map.replace(shudule, :process, "nuevo name")
+
+# IO.inspect(shudule);
+# IO.inspect(shudule1)
+# hd(shudule)
